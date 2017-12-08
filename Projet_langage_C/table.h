@@ -22,9 +22,14 @@ typedef struct _civil_servant
 int index(char* name, char* surname, unsigned int base, unsigned int N);
 int power (int number, int power);
 void add(char* name, char* surname, unsigned int salary);
-void load();
-
-
+void load(int number_of_servant);
+int show_salary(char* name, char* surname);
+int show_salary_between(int first_index, int end_index);
+int conflict();
+int average_conflict();
+void delete_civil(char* name, char* surname);
+void delete_civil_between(char* name, char* surname,int first_index, int end_index);
+void leave();
 
 
 
