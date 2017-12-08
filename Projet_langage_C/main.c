@@ -1,6 +1,7 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "table.h"
 
 exo1()
 {
