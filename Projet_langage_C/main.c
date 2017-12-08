@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "table.h"
@@ -30,7 +30,7 @@
 
 int main(int argc, char **argv)
 {
-	index("DUSSE","JEANCLAUDE", 25, 25);
+	index_calculator("DUSSE","JEANCLAUDE", 25, 25);
 	return 0;
 }
 

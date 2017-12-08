@@ -10,7 +10,7 @@ int power(int number, int power)
 	return result_power;
 }
 
-int index(char* name, char* surname, unsigned int base, unsigned int N)
+int index_calculator(char* name, char* surname, unsigned int base, unsigned int N)
 {
 	int sum = 0;
 	char* name_to_use = malloc(7*sizeof(char));

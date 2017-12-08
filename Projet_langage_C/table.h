@@ -5,7 +5,7 @@
 typedef struct _civil_servant 
 
 {
-    char *surname
+    char *surname;
     
 	unsigned int salary;
 
@@ -18,8 +18,7 @@ typedef struct _civil_servant
 
 
 
-
-int index(char* name, char* surname, unsigned int base, unsigned int N);
+int index_calculator(char* name, char* surname, unsigned int base,unsigned int N);
 int power (int number, int power);
 void add(char* name, char* surname, unsigned int salary);
 void load(int number_of_servant);
