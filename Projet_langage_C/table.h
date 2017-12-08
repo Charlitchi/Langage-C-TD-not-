@@ -29,7 +29,7 @@ int average_conflict();
 void delete_civil(char* name, char* surname);
 void delete_civil_between(char* name, char* surname,int first_index, int end_index);
 void leave();
-
+civil_servant** create_table(unsigned int size_table, unsigned int base);
 
 
 
