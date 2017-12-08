@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -27,24 +27,40 @@ exo1()
 
 int power(int number, int power)
 {
-	for (int i = 0; i < power; i++)
+	int result_power = 1;
+	for (int i = 1; i <= power; i++)
 	{
-		number *= number;
+		result_power *= number;
 	}
-	return number;
+	return result_power;
 }
-int index(char* s, unsigned int base, unsigned int N)
+int index(char* name, char* surname, unsigned int base, unsigned int N)
 {
 	int sum = 0;
-	for (int i = 0; s[i] != '\0'; i++)
+	char* name_to_use = malloc(7*sizeof(char));
+	name_to_use[6] = '\0';
+	for (int i = 0; i < 4; i++)
 	{
-		sum += s[i]*power(base, i);
+		if(name[i] != '_')	{ name_to_use[i] = name[i]; }
+		else { name_to_use[i] = name[i+1]; }
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		if(surname[i] != '_')	{ name_to_use[i] = surname[i]; }
+		else { name_to_use[4+i] = surname[i+1]; }
+	}
+	printf("%s\n", name_to_use);
+	for (int i = 0; name_to_use[i] != '\0'; i++)
+	{
+		sum += name_to_use[i]*power(base, i);
 	}
 	sum %= N;
 	return sum;
 }
 int main(int argc, char **argv)
 {
-	printf("hello world\n");
+	index("DUSSE","JEANCLAUDE", 25, 25);
 	return 0;
 }
+
+
