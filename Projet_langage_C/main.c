@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-
 exo1()
 {
 	char nom_fichier[] = "chicago.txt";
@@ -25,8 +24,27 @@ exo1()
 		printf("Problème lors de l'ouverture du fichier %s\n", nom_fichier);
 	}
 }
+
+int power(int number, int power)
+{
+	for (int i = 0; i < power; i++)
+	{
+		number *= number;
+	}
+	return number;
+}
+int index(char* s, unsigned int base, unsigned int N)
+{
+	int sum = 0;
+	for (int i = 0; s[i] != '\0'; i++)
+	{
+		sum += s[i]*power(base, i);
+	}
+	sum %= N;
+	return sum;
+}
 int main(int argc, char **argv)
 {
-	exo1();
+	printf("hello world\n");
 	return 0;
 }
