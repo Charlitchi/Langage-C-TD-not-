@@ -2,15 +2,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
-int power(int number, int power)
+unsigned long long power(int number, int power)
 {
-	int result_power = 1;
-	for (int i = 1; i <= power; i++)
-	{
-		result_power *= number;
-	}
-	return result_power;
+unsigned long long resultat = 1;
+for (int i =1; i<=power; i++)
+    {
+    resultat = resultat * number;
+    }
+    return resultat;
 }
 
 int index_calculator(char* name, char* surname, unsigned int base, unsigned int N)
@@ -36,7 +37,9 @@ int index_calculator(char* name, char* surname, unsigned int base, unsigned int 
 	for (int i = 0; name_to_use[i] != '\0'; i++)
 	{
 		sum += name_to_use[i]*power(base, i);
-	}
+
+    }
+    //printf("%lu", sum);
 	sum %= N;
 	free(name_to_use);
 	name_to_use = NULL;
