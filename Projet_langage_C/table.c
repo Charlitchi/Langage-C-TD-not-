@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <math.h>
+
 
 
 unsigned long long power(int number, int power)
@@ -26,16 +26,16 @@ int index_calculator(char* name, char* surname, unsigned int base, unsigned int 
 	{
 		if(name[i] != '_')	{ name_to_use[i] = name[i]; }
 		else { misc++; name_to_use[i] = name[i+misc]; }
-		printf("%s\n", name_to_use);
+		//printf("%s\n", name_to_use);
 	}
 	misc = 0;
 	for (int i = 0; i < 2; i++)
 	{
 		if(surname[i] != '_')	{ name_to_use[4+i] = surname[i]; }
 		else { misc++; name_to_use[4+i] = surname[i + misc]; }
-		printf("%s\n", name_to_use);
+		//printf("%s\n", name_to_use);
 	}
-	printf("%s\n", name_to_use);
+	//printf("%s\n", name_to_use);
 	for (int i = 0; name_to_use[i] != '\0'; i++)
 	{
 		sum += name_to_use[i]*power(base, i);
@@ -82,7 +82,7 @@ void add(char* name, char* surname, unsigned int salary, civil_servant* civil){
 	}
 }
 
-int show_salary(char* name, char* surname, civil_servant * civil)
+int show_salary(char* name, char* surname, civil_servant * civil) // il faudra faire une boucle et dans l'appel de la fonction, écrire : show_salary(.. , .., table[i])
 {
 	if( civil-> next != NULL)
 	{
@@ -99,21 +99,26 @@ int show_salary(char* name, char* surname, civil_servant * civil)
     {
 		return -1;
     }
-        // Il manque des returns
+        // Il manque des returns 
 }
+
 
 int show_salary_between(int first_index, int end_index,civil_servant ** table)
 {
         for (int i = first_index; i <= end_index; i++)
         {
-            while(table[i]->salary != NULL) // Là tu regardes un salaire(int) et un pointeur !!!
-            {
-                printf("le salaire de %s %s est de %d",table[i]->name, table[i]->surname, table[i]->salary);
-                table[i] = table[i]->next;// Il faut réussir à passer à table->next; Formule adéquate ? 
-            }
+            salary(table[i]);
         }
-		// Il manque des returns
+}
+void salary(civil_servant * civil)
+{
+    if (civil->next != NULL)
+    {
+        printf("le salaire de %s %s est de %d",civil->name, civil->surname, civil->salary);
+        salary(civil->next);
     }
+}
+
 
 int* civil_servant_number_by_index(civil_servant ** table)
 // Crée un tableau contenant le nombre de fonctionnaire par index
@@ -179,9 +184,9 @@ float average_conflict(civil_servant ** table)
 	return (float) conflict_number / (float) N;											// retourne le nombre de conflit
 }
 
-void delete_civil(char* name, char* surname,civil_servant ** table )
+void delete_civil(char* name, char* surname,civil_servant ** table, unsigned int N)
 {
-	for (int i = 0; i<=100; i++) // index de la table à modofier
+	for (int i = 0; i<=N; i++) // index de la table à modifier
 	{
 		while(table[i]->name != NULL) 
 		{
@@ -205,3 +210,98 @@ void delete_civil(char* name, char* surname,civil_servant ** table )
 		}
 	}
 }
+
+void delete_civil_between(char* name, char* surname,int first_index, int end_index){
+    
+    
+    
+}
+
+civil_servant* insert_end(civil_servant * civil, char* name, char* surname, unsigned int salary)
+  {
+      if(civil->next == NULL)
+      {
+          civil_servant* new_civil = malloc(sizeof(civil_servant));
+          civil->next = new_civil;
+          new_civil->next = NULL;
+          new_civil->name = name;
+          new_civil->surname = surname;
+          new_civil->salary = salary;
+          return new_civil;
+      }
+      else
+      {
+           insert_end(civil->next, name, surname, salary);
+      }
+  }
+
+void load(int number_of_servant)
+{
+    int TAILLE_MAX = 1000;
+    FILE* fichier = NULL;
+    char chaine[TAILLE_MAX];
+    char name[20] = {0};
+    char surname[20] = {0};
+    civil_servant** table = create_table(100,83);
+    fichier = fopen("chicago.txt", "r");
+  //for (int i = 0; )
+int tour = 0;
+ 
+    if (fichier != NULL)
+    {
+        while (fgets(chaine, TAILLE_MAX, fichier) != NULL && tour <3)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+        {
+                civil_servant * new_civil = malloc(sizeof(civil_servant));
+                fscanf(fichier, "%s %s %u", name, surname, &new_civil->salary);
+                new_civil->name = name;
+                new_civil->surname = surname;
+                new_civil->next = NULL;
+               // printf("%s ", new_civil->name);
+                //printf("%s \n", new_civil->surname);
+                tour++;
+printf("%d ", tour);
+                int i = index_calculator(name,surname, 83,100);
+                printf(" %d \n", i);
+                if (table[i] == NULL)
+                {
+                    table[i] = new_civil;
+                }
+                else
+                {
+                    table[i] = insert_end(table[i], name, surname, new_civil->salary);
+                    
+                }
+                
+
+        
+                
+            }
+        }
+  
+        fclose(fichier);
+                        for (int i =0; i<100; i++)
+                {
+                    if (table[i] == NULL)
+                    {
+                        
+                    }
+                    else
+                    {
+                        printf("%d ", i);
+                         printf("%s %u \n", table[i]->name, table[i]->salary);
+                    }
+                   
+                }
+    }
+    
+    /*
+     *  civil_servant * new_civil = malloc(sizeof(civil_servant));
+    fichier = fopen("chicago.txt", "r");
+ fscanf(fichier, "%s %s %u", name, surname, &new_civil->salary);
+ new_civil->name = name;
+ new_civil->surname = surname;
+  printf("%s \n", new_civil->name);
+  printf("%s \n", new_civil->surname);*/
+
+
+
