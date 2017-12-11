@@ -1,0 +1,27 @@
+void affichage_arborescence(noeud const * arbre, int offset)
+{
+	for(int i = 0; i < offset; i++) printf(" ");
+	if(offset != 0) printf("|-");
+	printf("%i\n", arbre->valeur);
+	if (arbre->fils_droite != NULL || arbre->fils_gauche != NULL)
+	{
+		if(arbre->fils_gauche != NULL)
+		{
+		affichage_arborescence(arbre->fils_gauche, offset + 2);
+		}
+		else
+		{
+			for(int i = 0; i < offset + 2; i++) printf(" ");
+			printf("|-x\n");
+		}
+		if(arbre->fils_droite != NULL)
+		{
+		affichage_arborescence(arbre->fils_droite, offset + 2);
+		}
+		else
+		{
+			for(int i = 0; i < offset + 2; i++) printf(" ");
+			printf("|-x\n");
+		}
+	}
+}
