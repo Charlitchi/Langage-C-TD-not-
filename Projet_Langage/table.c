@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "table.h"
+#include <stdlib.h>
 
 
 unsigned long long power(int number, int power) // Calcul d'une valeur number à la puissance power
@@ -52,19 +53,88 @@ void create_table()
     for (int i =0; i<table.size;i++)
     {
         table.vecteur[i].logic_size = 0;
-        table.vecteur[i].content = malloc(sizeof(civil_servant));
+        //table.vecteur[i].content = malloc(10*sizeof(civil_servant));
+        table.vecteur[i].content = NULL;
         table.vecteur[i].physical_size = 0;
-    }
+    }   
     
 }
 
 void add(char* name, char* surname, unsigned int salary)
 {
     int index = index_calculator(name, surname);
-    //table.vecteur[index].content = malloc(sizeof(civil_servant));
-    table.vecteur[index].content->name = name;
-    table.vecteur[index].content->surname = surname;
-    table.vecteur[index].content->salary = salary;
-    //logic size
-    // physical size
+    if (table.vecteur[index].content == NULL)
+    {
+        table.vecteur[index].content= malloc(sizeof(civil_servant));
+        table.vecteur[index].content[table.vecteur[index].logic_size].name = name;
+        table.vecteur[index].content[table.vecteur[index].logic_size].surname = surname;
+        table.vecteur[index].content[table.vecteur[index].logic_size].salary = salary;
+        table.vecteur[index].physical_size++;
+        table.vecteur[index].logic_size++;
+    }
+    else
+    {
+        if (table.vecteur[index].physical_size == table.vecteur[index].logic_size)
+        {
+        table.vecteur[index].content[table.vecteur[index].logic_size].name = name;
+        table.vecteur[index].content[table.vecteur[index].logic_size].surname = surname;
+        table.vecteur[index].content[table.vecteur[index].logic_size].salary = salary;
+        table.vecteur[index].physical_size++;
+        table.vecteur[index].logic_size++;
+        }
+        if (table.vecteur[index].physical_size > table.vecteur[index].logic_size)        
+        {
+
+        table.vecteur[index].content[table.vecteur[index].logic_size].name = name;
+        table.vecteur[index].content[table.vecteur[index].logic_size].surname = surname;
+        table.vecteur[index].content[table.vecteur[index].logic_size].salary = salary;
+        table.vecteur[index].logic_size++;
+            
+            
+            
+        }
+        
+    }
+       
+    
 }
+int show_salary(char* name, char* surname)
+{
+    int index_value = index_calculator(name, surname);
+    int salary = 0;
+    for(int i=1; i<=table.vecteur[index_value].physical_size; i++)
+    {
+        if (name == table.vecteur[index_value].content[i].name && surname == table.vecteur[index_value].content[i].surname )
+        {
+            salary = table.vecteur[index_value].content[i].salary;
+        }
+    }
+    return salary;
+}
+
+void load(int number_of_servant)
+{
+    int TAILLE_MAX = 1000;
+    FILE* fichier = NULL;
+    char chaine[TAILLE_MAX];
+    char *name;
+    char *surname;
+    int salary;
+    fichier = fopen("chicago.txt", "r");
+  //for (int i = 0; )
+int tour = 0;
+ 
+    if (fichier != NULL)
+    {
+        while (fgets(chaine, TAILLE_MAX, fichier) != NULL && tour <number_of_servant)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+        {
+            name  = malloc(20* sizeof(char));
+            surname = malloc(20*sizeof(char));
+            fscanf(fichier, "%s %s %u", name, surname, salary);
+            add(name, surname,salary);
+        }
+    }  
+        fclose(fichier);
+
+}
+

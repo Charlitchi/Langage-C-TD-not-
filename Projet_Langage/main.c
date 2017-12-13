@@ -6,10 +6,11 @@ int main(int argc, char **argv)
 {
     table.size = 100;
     table.base = 83;
-    int index = index_calculator("AARON", "Katrina");
+    int index = index_calculator("AARON", "Kimberlei");
     create_table();
-add("AARON", "Katrina", 100);
-printf("\n%d", table.vecteur[index].content->salary);
-printf("\n%s", table.vecteur[index].content->name);
-	return 0;
+    add("AARON", "Kimberlei", 1000);
+    //add("ADEBAYO", "Benjamin", 1000);
+   printf("%s\n", table.vecteur[index].content[table.vecteur[index].logic_size].name);
+   printf("%s\n", table.vecteur[index].content[table.vecteur[index].logic_size].surname);
+   printf("%d\n", table.vecteur[index].content[table.vecteur[index].logic_size].salary);
 }
