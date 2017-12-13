@@ -6,6 +6,7 @@
 int main(int argc, char **argv)
 {
 	load(10);
+	table_base = 83;
 	return 0;
 }
 

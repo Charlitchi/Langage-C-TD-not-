@@ -17,10 +17,14 @@ typedef struct _civil_servant
 
 } civil_servant ;
 
+int table_base;
+int table_size;
+int * table_index_size;
+civil_servant * * table;
 
 
-
-int index_calculator(char* name, char* surname, unsigned int base,unsigned int N);	     // OK
+//int index_calculator(char* name, char* surname, unsigned int base,unsigned int N);	     // OK
+int index_calculator(char* name, char* surname);	     // OK
 unsigned long long power (int number, int power);									        // OK
 void add(char* name, char* surname, unsigned int salary, civil_servant* civil); // Il faut calculer l'index en dehors et chercher le dernier civil_servant associé à cet index.
 void load(int number_of_servant);
@@ -33,7 +37,8 @@ float average_conflict(civil_servant ** table);  									   // OK
 void delete_civil(char* name, char* surname,civil_servant ** table, unsigned int N); 
 void delete_civil_between(char* name, char* surname,int first_index, int end_index);
 void leave();
-civil_servant** create_table(unsigned int size_table, unsigned int base);
+//civil_servant** create_table(unsigned int size_table, unsigned int base);
+void create_table();
 civil_servant* insert_end(civil_servant * civil, char* name, char* surname, unsigned int salary);// ok
 
 

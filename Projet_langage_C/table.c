@@ -4,7 +4,75 @@
 #include <stdbool.h>
 #include <string.h>
 
+char * alphabetical_arrange(char * word1, char * word2)
+{
+	for(int i = 0; word1[i] != '\0' && word2[i] != '\0'; i++)
+	{
+		if (word1[i] > word2[i]) 
+		{
+			return word1;
+		}
+		if (word2[i] > word1[i]) 
+		{
+			return word2;
+		}
+	}
+	int i = 0;
+	while(1)
+	{
+		if (word1[i] == '\0') 
+		{
+			return word1;
+		}
+		if (word2[i] == '\0') 
+		{
+			return word2;
+		}
+		i++;
+	}
+	return word1;
+}
 
+civil_servant * civil_servant_alphabetical_arrange(civil_servant * civil_servant1, civil_servant * civil_servant2) // à vérifier
+{
+	//bool name
+	//if(civil_servant1->name == alphabetical_arrange(civil_servant1->name, civil_servant2->name &&)
+	// Calcul du 1er selon l'ordre alphabétique des NOMS
+	char * first_name1 = alphabetical_arrange(&(civil_servant1->name), &(civil_servant2->name));
+	char * first_name2 = alphabetical_arrange((&civil_servant2->name), &(civil_servant1->name));
+	bool name_are_the_same = (first_name1 != first_name2);
+	if(name_are_the_same == false) // teste si les noms sont les memes
+	{ // si les noms ne sont pas les memes
+		
+		if (&(civil_servant1->name) == alphabetical_arrange(&civil_servant1, &civil_servant2))
+		{
+			return civil_servant1;
+		}
+		if (&(civil_servant2->name) == alphabetical_arrange(&civil_servant1, &civil_servant2))
+		{
+			return civil_servant2;
+		}
+	}
+	else // si les noms sont les mêmes
+	{
+		char * first_surname1 = alphabetical_arrange(&(civil_servant1->surname), &(civil_servant2->surname));
+		char * first_surname2 = alphabetical_arrange(&(civil_servant2->surname), &(civil_servant1->surname));
+		
+		bool surname_are_the_same = (first_surname1 != first_surname2);
+		if (surname_are_the_same == false) // teste si les prénoms sont les memes
+		{ // si les prénoms sont différents
+			if (&(civil_servant1->name) == first_name1)
+			{
+				return civil_servant1;
+			}
+			if (&(civil_servant2->name) == first_name1)
+			{
+				return civil_servant2;
+			}
+		}
+		return civil_servant1;
+	}
+}
 
 unsigned long long power(int number, int power)
 {
@@ -16,7 +84,8 @@ for (int i =1; i<=power; i++)
     return resultat;
 }
 
-int index_calculator(char* name, char* surname, unsigned int base, unsigned int N)
+//int index_calculator(char* name, char* surname, unsigned int base, unsigned int N)
+int index_calculator(char* name, char* surname)
 {
 	unsigned long long sum = 0;
 	char* name_to_use = malloc(7*sizeof(char));
@@ -25,34 +94,34 @@ int index_calculator(char* name, char* surname, unsigned int base, unsigned int 
 	for (int i = 0; i < 4; i++)
 	{
 		if(name[i] != '_')	{ name_to_use[i] = name[i]; }
-		else { misc++; name_to_use[i] = name[i+misc]; }
+		else { misc++; name_to_use[i] = name[i + misc]; }
 		//printf("%s\n", name_to_use);
 	}
 	misc = 0;
 	for (int i = 0; i < 2; i++)
 	{
-		if(surname[i] != '_')	{ name_to_use[4+i] = surname[i]; }
+		if(surname[i] != '_')	{ name_to_use[4 + i] = surname[i]; }
 		else { misc++; name_to_use[4+i] = surname[i + misc]; }
 		//printf("%s\n", name_to_use);
 	}
 	//printf("%s\n", name_to_use);
 	for (int i = 0; name_to_use[i] != '\0'; i++)
 	{
-		sum += name_to_use[i]*power(base, i);
-
+		sum += name_to_use[i] * power(table_base, i);
     }
     //printf("%lu", sum);
-	sum %= N;
+	//sum %= N;
+	sum %= table_size;
 	free(name_to_use);
 	name_to_use = NULL;
-    create_table(N, base);
 	return (int) sum;
 }
 
-civil_servant** create_table(unsigned int size_table, unsigned int base)
+void create_table()
 {
-	civil_servant * * table = malloc(size_table*sizeof(civil_servant*));
-	for(int i = 0; i < size_table; i++) { table[i] = NULL; }
+	table = malloc(table_size * sizeof(civil_servant*));
+	table_index_size = malloc(table_size * sizeof(civil_servant*));
+	for(int i = 0; i < table_size; i++) { table[i] = NULL; table_index_size[i] = 0; }
     
     /*
     civil_servant * new_civil = malloc(sizeof(civil_servant));
@@ -62,12 +131,23 @@ civil_servant** create_table(unsigned int size_table, unsigned int base)
     printf("%s", table[1]->name);
      * 
      */ //Ceci est un essai pour voir comment cela marche
-    return table;
+    //return table;
 
 }
 
+/*
+civil_servant ** create_table(unsigned int size_table, unsigned int base, int i)
+{
+	civil_servant ** the_table = malloc(size_table*sizeof(int*));
+	for (int i = 0; i < size_table; i++)
+	{
+		the_table[i] = NULL;
+	}
+	return the_table;
+}*/
+
 void add(char* name, char* surname, unsigned int salary, civil_servant* civil){
-	if(civil->next == NULL)
+	/*if(civil->next == NULL)
 	{
 		civil_servant * new_civil = malloc(sizeof(civil_servant));
 		civil->next = new_civil;
@@ -79,8 +159,51 @@ void add(char* name, char* surname, unsigned int salary, civil_servant* civil){
 	else 
 	{
 		add(name, surname, salary,  civil->next);
+	}*/
+	//int civil_servant_index = 
+}
+
+civil_servant * create_civil_servant(char* name, char* surname, unsigned int salary)
+{
+	civil_servant * new_civil_servant = malloc(sizeof(civil_servant));
+	new_civil_servant->name = name ;
+	new_civil_servant->surname = surname ;
+	new_civil_servant->salary = salary ;
+}
+
+void add_new(char* name, char* surname, unsigned int salary) // A PUTAIN DE VERIFIER
+{
+	int civil_servant_index = index_calculator(name, surname);
+	civil_servant * new_civil_servant = create_civil_servant(name, surname, salary);
+	
+	if (table[civil_servant_index] == NULL)
+	{
+		table[civil_servant_index] = new_civil_servant;
+	}
+	else
+	{
+		civil_servant * ptr_temp = table[civil_servant_index];																// création d'un tableau de fonctionnaire temporaire qui est 
+		table[civil_servant_index] = malloc((table_index_size[civil_servant_index] + 1) * sizeof(civil_servant));			// création d'un nouveau tableau de fonctionnaire
+		table_index_size[civil_servant_index]++;																			// la taille du tableau est mise à jour
+		
+		/*for (int i = 0; i < table_index_size[civil_servant_index] - 1 ; i++)												// parcourt le tableau de fonctionnaire
+		{*/
+			bool new_civil_is_still_unplaced = true;
+			for (int i = 0; new_civil_is_still_unplaced && (i < table_index_size[civil_servant_index] - 1); i++)
+			{
+				if (( new_civil_servant == civil_servant_alphabetical_arrange(new_civil_servant, ptr_temp[i]) ) && new_civil_is_still_unplaced) // VERIFIER SI ON COMPARE DES CHOSES COMPARABLES
+				{
+					table[civil_servant_index][i] = new_civil_servant;
+					new_civil_is_still_unplaced = false;
+				}
+				else
+				{
+					table[civil_servant_index][i] = ptr_temp[i];
+				}
+			}
 	}
 }
+
 
 int show_salary(char* name, char* surname, civil_servant * civil) // il faudra faire une boucle et dans l'appel de la fonction, écrire : show_salary(.. , .., table[i])
 {
@@ -92,7 +215,7 @@ int show_salary(char* name, char* surname, civil_servant * civil) // il faudra f
 		}
 		else
 		{
-			show_salary(name, surname, civil->next);
+			return show_salary(name, surname, civil->next);
 		}
 	}
 	else
@@ -105,10 +228,11 @@ int show_salary(char* name, char* surname, civil_servant * civil) // il faudra f
 
 int show_salary_between(int first_index, int end_index,civil_servant ** table)
 {
-        for (int i = first_index; i <= end_index; i++)
-        {
-            salary(table[i]);
-        }
+	for (int i = first_index; i <= end_index; i++)
+	{
+		salary(table[i]);
+	}
+	// il manque un return
 }
 void salary(civil_servant * civil)
 {
@@ -123,15 +247,16 @@ void salary(civil_servant * civil)
 int* civil_servant_number_by_index(civil_servant ** table)
 // Crée un tableau contenant le nombre de fonctionnaire par index
 {
-	int N = 12; // Récuperer N
-	int * civil_servant_number_by_index = malloc(N * sizeof(int)); 
+	//int N = 12; // Récuperer N
+	//int * civil_servant_number_by_index = malloc(N * sizeof(int)); 
+	int * civil_servant_number_by_index = malloc(table_size * sizeof(int)); 
 	// crée un tableau de la même taille que la table
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < table_size; i++)
 	{
 		civil_servant_number_by_index[i] = 0;
 	}
 	//initialise le tableau à 0
-	for (int i = 0; i < N; i++) // parcourt le tableau sur tous les indices
+	for (int i = 0; i < table_size; i++) // parcourt le tableau sur tous les indices
 	{
 		if (table[i] != NULL)
 		// teste s'il y a un fonctionnaire à l'index 'i'
@@ -233,7 +358,7 @@ civil_servant* insert_end(civil_servant * civil, char* name, char* surname, unsi
       {
            insert_end(civil->next, name, surname, salary);
       }
-  }
+	}
 
 void load(int number_of_servant)
 {
@@ -242,7 +367,9 @@ void load(int number_of_servant)
     char chaine[TAILLE_MAX];
     char name[20] = {0};
     char surname[20] = {0};
-    civil_servant** table = create_table(100,83);
+    //civil_servant** table = create_table(100,83);
+    
+	
     fichier = fopen("chicago.txt", "r");
   //for (int i = 0; )
 int tour = 0;
@@ -260,7 +387,8 @@ int tour = 0;
                 //printf("%s \n", new_civil->surname);
                 tour++;
 printf("%d ", tour);
-                int i = index_calculator(name,surname, 83,100);
+                //int i = index_calculator(name,surname, 83,100);
+                int i = index_calculator(name, surname);
                 printf(" %d \n", i);
                 if (table[i] == NULL)
                 {
