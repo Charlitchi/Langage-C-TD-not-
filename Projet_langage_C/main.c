@@ -31,7 +31,7 @@ free(c2);*/
 	create_table();
 	//add("AARON","Katrina", 1500);
 	//printf("Bonjour\n");
-    load(1000);
+    load(94);
 for (int i =0; i< table.size;i++)
   {
       

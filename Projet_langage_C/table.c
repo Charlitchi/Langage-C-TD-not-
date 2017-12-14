@@ -247,6 +247,10 @@ printf("\n\n-----Vous avez choisi conflict-----\n\n");
           }
 
               }
+              else
+          {
+               printf("Il n'y a pas de conflit à l'index : %i car celui-ci n'existe pas \n", i);
+          }
           }
         if (number_of_conflict == table.size)
         {
@@ -265,6 +269,8 @@ else
 
 void average_conflict()
 {
+    double number_of_conflict =0;
+    double conflit_size =0;
     printf("\n\n-----Vous avez choisi nombre moyen de conflit-----\n\n");
   for (int i =0; i< table.size;i++)
   {
@@ -273,6 +279,8 @@ void average_conflict()
           if (table.vecteur[i].logic_size>0)
           {
               printf("Il y a %i conflit(s) à l'index : %i\n", table.vecteur[i].logic_size, i);
+               number_of_conflict ++;
+              conflit_size = conflit_size + table.vecteur[i].logic_size;
           }
           else
           {
@@ -280,7 +288,12 @@ void average_conflict()
           }
 
               }
+              {
+               printf("Il n'y a pas de conflit à l'index  car celui-ci n'existe pas : %i\n", i);
           }
+          }
+          double result = conflit_size/number_of_conflict;
+          printf("Il y a donc %lf en moyenne par index", result);
     
     
     
