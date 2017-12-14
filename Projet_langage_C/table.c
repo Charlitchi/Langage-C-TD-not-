@@ -288,8 +288,9 @@ void average_conflict()
           }
 
               }
+              else
               {
-               printf("Il n'y a pas de conflit à l'index  car celui-ci n'existe pas : %i\n", i);
+               printf("Il n'y a pas de conflit à l'index %i car celui-ci n'existe pas.\n", i);
           }
           }
           double result = conflit_size/number_of_conflict;
