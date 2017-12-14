@@ -34,9 +34,18 @@ free(c2);*/
     load(3);
 for (int i =0; i< table.size;i++)
   {
+      
       if (table.vecteur[i].content!= NULL)
       {
-          printf("\n %d : %s", i, table.vecteur[i].content[0].name);
+          printf("\n ------------------ %d : ", i);
+          for (int j=0; j<table.vecteur[i].logic_size;j++)
+          {
+              if( table.vecteur[i].content[j].name != NULL)
+              {
+            printf("\n %d : %s", j, table.vecteur[i].content[j].name); 
+              }
+          }
+
       }
       else
       {

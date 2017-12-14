@@ -113,20 +113,39 @@ void add(char* name, char* surname, unsigned int salary)
 		/*table.vecteur[index].content->name = NULL;
 		table.vecteur[index].content->surname = NULL;
 		table.vecteur[index].content->salary = 0;*/
-		table.vecteur[index].content = new_civil;
+		//table.vecteur[index].content = new_civil;
 		//put_civil_servant(new_civil, index, 0);
+        table.vecteur[index].content[table.vecteur[index].logic_size].name = new_civil->name;
+        table.vecteur[index].content[table.vecteur[index].logic_size].surname = new_civil->surname;
+        table.vecteur[index].content[table.vecteur[index].logic_size].salary = new_civil->salary;
 		table.vecteur[index].physical_size++;
 		table.vecteur[index].logic_size++;
 	}
-	else if (table.vecteur[index].logic_size == table.vecteur[index].physical_size)
-	{
-		int i = 1;
-		i++;
-	}
 	else 
+    {
+        if (table.vecteur[index].logic_size == table.vecteur[index].physical_size)
+	{
+        
+		civil_servant * new_civil = create_civil_servant(name, surname, salary);
+        table.vecteur[index].content[table.vecteur[index].logic_size].name = new_civil->name;
+        table.vecteur[index].content[table.vecteur[index].logic_size].surname = new_civil->surname;
+        table.vecteur[index].content[table.vecteur[index].logic_size].salary = new_civil->salary;
+        table.vecteur[index].physical_size++;
+		table.vecteur[index].logic_size++;
+         
+	}
+	if(table.vecteur[index].logic_size < table.vecteur[index].physical_size)
 		{
-			int j = 1 ; j++;
+            
+		civil_servant * new_civil = create_civil_servant(name, surname, salary);
+        table.vecteur[index].content[table.vecteur[index].logic_size].name = new_civil->name;
+        table.vecteur[index].content[table.vecteur[index].logic_size].surname = new_civil->surname;
+        table.vecteur[index].content[table.vecteur[index].logic_size].salary = new_civil->salary;
+		table.vecteur[index].logic_size++;
+         
 		}
+        }
+    }
 //	printf("%s\n", table.vecteur[index].content[0].name);
 		/*
     table.vecteur[index].content->name = name;
@@ -137,7 +156,7 @@ void add(char* name, char* surname, unsigned int salary)
     // physical size
 	  
 	  
-}
+
 void load(int number_of_servant)
 {
     int TAILLE_MAX = 1000;
