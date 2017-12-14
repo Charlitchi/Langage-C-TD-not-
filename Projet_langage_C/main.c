@@ -43,6 +43,8 @@ for (int i =0; i< table.size;i++)
               if( table.vecteur[i].content[j].name != NULL)
               {
             printf("\n %d : %s", j, table.vecteur[i].content[j].name); 
+            printf("\n %d : %s", j, table.vecteur[i].content[j].surname); 
+            printf("\n %d : %d", j, table.vecteur[i].content[j].salary); 
               }
           }
 
@@ -54,6 +56,14 @@ for (int i =0; i< table.size;i++)
       }
   
     }
+    printf("\n ------------------------------------ \n");
+    char* name_test = "BROWNRIDGE";
+    char* surname_test = "John_M";
+    
+ int salary_value = show_salary(name_test,surname_test);
+ printf("\n \n \nVoici le salaire de BROWNRIDGE John_M(il est de 98016 dans le fichier) : %u", salary_value);
+    
+    show_salary_between(2, 5);
 return 0; 
  }
   

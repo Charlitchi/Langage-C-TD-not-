@@ -19,6 +19,8 @@ civil_servant * civil_servant_sort(civil_servant * civil1, civil_servant * civil
 	else return civil2;
 }
 
+
+
 civil_servant * create_civil_servant(char* name, char* surname, unsigned int salary)
 {
 	civil_servant * new_civil_servant = malloc(sizeof(civil_servant));
@@ -95,6 +97,76 @@ void create_table()
     
 }
 
+int show_salary(char* name_test, char* surname_test)
+{
+    int index_value = index_calculator(name_test, surname_test);
+    int value_name = -1;  
+    int value_surname =-1;
+    unsigned int salary_value = 0;
+    if (table.vecteur[index_value].content == NULL)
+    {
+        return salary_value;
+    }
+    else
+    {
+        printf("\n%d\n", table.vecteur[index_value].logic_size);
+        for (int i =0; i<table.vecteur[index_value].logic_size;i++)        {
+
+           value_name = strcoll(table.vecteur[index_value].content[i].name, name_test);
+         
+           value_surname= strcoll(table.vecteur[index_value].content[i].surname, surname_test);
+            printf(" \n ----- index n°%d -----\n ", i);
+           printf(" -- %i -- %i --  ", value_name, value_surname);
+           printf("-- salary : %d -- ",table.vecteur[index_value].content[i].salary);
+           if (value_name == 0 && value_surname == 0)
+           {
+               salary_value = table.vecteur[index_value].content[i].salary;
+               break;
+           }
+            /*
+            if (table.vecteur[index_value].content[i].name == name_test && table.vecteur[index_value].content[i].surname == surname_test )
+            {
+                salary_value = table.vecteur[index_value].content[i].salary;
+            }
+             */
+        }
+    }
+
+    return salary_value;
+        
+        
+        
+       // table.vecteur[index].content[table.vecteur[index].logic_size].name
+} 
+
+
+void show_salary_between(int first_index, int end_index)
+{
+    if (first_index<0 || first_index >end_index)
+    {
+        first_index = 0;
+    }
+    if (end_index >=100)
+    {
+        end_index =99;
+    }
+    for (int i =first_index; i< end_index;i++)
+    {
+      if (table.vecteur[i].content!= NULL)
+      {
+          printf("\n -------- index n°%d --------  \n ", i);
+          for (int j=0; j<table.vecteur[i].logic_size;j++)
+          {
+              if( table.vecteur[i].content[j].name != NULL)
+              {
+                  printf("Le salaire de %s %s est de : %u $ \n",table.vecteur[i].content[j].name, table.vecteur[i].content[j].surname,table.vecteur[i].content[j].salary );
+              }
+          }
+          
+          }
+ }
+ }
+
 void add(char* name, char* surname, unsigned int salary)
 {
     int index = index_calculator(name, surname);
@@ -125,7 +197,6 @@ void add(char* name, char* surname, unsigned int salary)
     {
         if (table.vecteur[index].logic_size == table.vecteur[index].physical_size)
 	{
-        
 		civil_servant * new_civil = create_civil_servant(name, surname, salary);
         table.vecteur[index].content[table.vecteur[index].logic_size].name = new_civil->name;
         table.vecteur[index].content[table.vecteur[index].logic_size].surname = new_civil->surname;
