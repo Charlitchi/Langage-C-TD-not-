@@ -72,8 +72,16 @@ void add(char* name, char* surname, unsigned int salary)
         table.vecteur[index].physical_size++;
         table.vecteur[index].logic_size++;
     }
+    
     else
     {
+        for (int i =0; i<=table.vecteur[index].logic_size;i++)
+        {
+            if (table.vecteur[index].content[i].name == name && table.vecteur[index].content[i].surname == surname)
+            {
+                break;
+            }
+        }
         if (table.vecteur[index].physical_size == table.vecteur[index].logic_size)
         {
         table.vecteur[index].content[table.vecteur[index].logic_size].name = name;
@@ -117,21 +125,30 @@ void load(int number_of_servant)
     int TAILLE_MAX = 1000;
     FILE* fichier = NULL;
     char chaine[TAILLE_MAX];
-    char *name;
-    char *surname;
-    int salary;
+    char* name;// = ( char *) malloc(20* sizeof(char));
+    char * surname;// = ( char *)malloc(20*sizeof(char));
+   // int salary;
+
     fichier = fopen("chicago.txt", "r");
   //for (int i = 0; )
 int tour = 0;
  
     if (fichier != NULL)
     {
-        while (fgets(chaine, TAILLE_MAX, fichier) != NULL && tour <number_of_servant)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+        while (fgets(chaine, TAILLE_MAX, fichier) != NULL && tour <1)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
         {
-            name  = malloc(20* sizeof(char));
-            surname = malloc(20*sizeof(char));
-            fscanf(fichier, "%s %s %u", name, surname, salary);
-            add(name, surname,salary);
+                      //  name = ( char *) malloc(20* sizeof(char));
+                    //   surname = ( char *) malloc(20* sizeof(char));
+            civil_servant * new_civil = malloc(sizeof(civil_servant));
+            //fscanf(fichier, "%s %s %d", name, surname, &new_civil->salary);
+            fscanf(fichier, "%s %s %d", name, surname, &new_civil->salary);
+       //     fscanf(fichier, "%s %s %u", name, surname, &new_civil->salary);
+            //printf("%s",name);
+            add(name, surname,new_civil->salary);
+            tour++;
+            //free(name); free(surname);
+            name = ( char *) malloc(20* sizeof(char));
+           // name = ( char *) malloc(20* sizeof(char));
         }
     }  
         fclose(fichier);
