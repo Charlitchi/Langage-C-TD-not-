@@ -227,6 +227,65 @@ void add(char* name, char* surname, unsigned int salary)
     // physical size
 	  
 	  
+void conflict()
+{
+printf("\n\n-----Vous avez choisi conflict-----\n\n");
+    int number_of_conflict =0;
+  for (int i =0; i< table.size;i++)
+  {
+      if (table.vecteur[i].content!= NULL)
+      {
+          if (table.vecteur[i].logic_size>0)
+          {
+              printf("Il y a un conflit à l'index : %i\n", i);
+              number_of_conflict++;
+              
+          }
+          else
+          {
+               printf("Il n'y a pas de conflit à l'index : %i\n", i);
+          }
+
+              }
+          }
+        if (number_of_conflict == table.size)
+        {
+            printf("Il y a des conflits dans toute la table");
+            
+        }   
+else
+    {
+    
+  
+      printf("Il y a %i conflit dans la table\n", number_of_conflict);
+     }
+     } 
+  
+  
+
+void average_conflict()
+{
+    printf("\n\n-----Vous avez choisi nombre moyen de conflit-----\n\n");
+  for (int i =0; i< table.size;i++)
+  {
+      if (table.vecteur[i].content!= NULL)
+      {
+          if (table.vecteur[i].logic_size>0)
+          {
+              printf("Il y a %i conflit(s) à l'index : %i\n", table.vecteur[i].logic_size, i);
+          }
+          else
+          {
+               printf("Il n'y a pas de conflit à l'index : %i\n", i);
+          }
+
+              }
+          }
+    
+    
+    
+}
+
 
 void load(int number_of_servant)
 {
@@ -246,7 +305,7 @@ int tour = 0;
     {
         while (fgets(chaine, TAILLE_MAX, fichier) != NULL)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
         {
-if (tour <1000)
+if (tour <number_of_servant)
 {
     
             alloc_name = (char*) malloc(20);

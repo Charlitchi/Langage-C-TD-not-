@@ -44,8 +44,8 @@ int show_salary(char* name, char* surname);                     // OK
 void show_salary_between(int first_index, int end_index);      // OK
 void salary(civil_servant * civil);                                                  // OK
 int* civil_servant_number_by_index(civil_servant ** table); 						    // OK
-int conflict(civil_servant ** table);  												
-float average_conflict(civil_servant ** table);  									   
+void conflict();  												
+void average_conflict();  									   
 void delete_civil(char* name, char* surname,civil_servant ** table, unsigned int N); 
 void delete_civil_between(char* name, char* surname,int first_index, int end_index);
 void leave();

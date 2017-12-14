@@ -31,7 +31,7 @@ free(c2);*/
 	create_table();
 	//add("AARON","Katrina", 1500);
 	//printf("Bonjour\n");
-    load(3);
+    load(1000);
 for (int i =0; i< table.size;i++)
   {
       
@@ -56,6 +56,7 @@ for (int i =0; i< table.size;i++)
       }
   
     }
+    
     printf("\n ------------------------------------ \n");
     char* name_test = "BROWNRIDGE";
     char* surname_test = "John_M";
@@ -63,7 +64,9 @@ for (int i =0; i< table.size;i++)
  int salary_value = show_salary(name_test,surname_test);
  printf("\n \n \nVoici le salaire de BROWNRIDGE John_M(il est de 98016 dans le fichier) : %u", salary_value);
     
-    show_salary_between(2, 5);
+    show_salary_between(-332, 10);
+    conflict();
+    average_conflict();
 return 0; 
  }
   
