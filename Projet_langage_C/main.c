@@ -25,12 +25,27 @@ free(c);
 free(c2);*/
 
 	table.size = 100;
-	printf("La taille	 de la table est : %i\n", table.size);
+	//printf("La taille	de la table est : %i\n", table.size);
 	table.base = 83;
-	printf("La base		 de la table est : %i\n", table.size);
+	//printf("La base	 de la table est : %i\n", table.size);
 	create_table();
-	add("AARON","Katrina", 1500);
-	printf("Bonjour\n");
+	//add("AARON","Katrina", 1500);
+	//printf("Bonjour\n");
+    load(3);
+for (int i =0; i< table.size;i++)
+  {
+      if (table.vecteur[i].content!= NULL)
+      {
+          printf("\n %d : %s", i, table.vecteur[i].content[0].name);
+      }
+      else
+      {
+        printf("\n Rien à l'index : %d", i);
 
-	return 0;
-}
+      }
+  
+    }
+return 0; 
+ }
+  
+

@@ -85,7 +85,7 @@ int index_calculator(char* name, char* surname)
 
 void create_table()
 {
-    table.vecteur = malloc(table.size * sizeof(type_vector*));
+    table.vecteur = malloc(table.size * sizeof(type_vector));
     for (int i = 0; i < table.size; i++)
     {
         table.vecteur[i].logic_size = 0;
@@ -98,14 +98,14 @@ void create_table()
 void add(char* name, char* surname, unsigned int salary)
 {
     int index = index_calculator(name, surname);
-	printf("%i\n", index);
+	//printf("%i\n", index);
     //table.vecteur[index].content = malloc(sizeof(civil_servant));
 	
 	
 	//bool name_are_the_same = strcoll()
 	//for(int i = 0; i < table.vecteur[index].logic_size, i++)
 
-	if(table.vecteur[index].physical_size == 0)
+	if(table.vecteur[index].logic_size == 0)
 	{
 		//printf("1\n");
 		civil_servant * new_civil = create_civil_servant(name, surname, salary);
@@ -127,7 +127,7 @@ void add(char* name, char* surname, unsigned int salary)
 		{
 			int j = 1 ; j++;
 		}
-	printf("%s\n", table.vecteur[index].content[0].name);
+//	printf("%s\n", table.vecteur[index].content[0].name);
 		/*
     table.vecteur[index].content->name = name;
     table.vecteur[index].content->surname = surname;
@@ -138,3 +138,55 @@ void add(char* name, char* surname, unsigned int salary)
 	  
 	  
 }
+void load(int number_of_servant)
+{
+    int TAILLE_MAX = 1000;
+    FILE* fichier = NULL;
+    char chaine[TAILLE_MAX];
+    char* alloc_name;// = (char*) malloc(20);
+    char* alloc_surname;// = (char*) malloc(20);
+ //   char * alloc_surname = malloc(20*sizeof(char));
+   // int salary;
+
+    fichier = fopen("chicago.txt", "r");
+  //for (int i = 0; )
+int tour = 0;
+ 
+    if (fichier != NULL)
+    {
+        while (fgets(chaine, TAILLE_MAX, fichier) != NULL)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+        {
+if (tour <1000)
+{
+    
+            alloc_name = (char*) malloc(20);
+            alloc_surname = (char*) malloc(20);
+            civil_servant * new_civil = malloc(sizeof(civil_servant));
+            //fscanf(fichier, "%s %s %d", name, surname, &new_civil->salary);
+            fscanf(fichier, "%s %s %d", alloc_name, alloc_surname, &new_civil->salary);
+       //     fscanf(fichier, "%s %s %u", name, surname, &new_civil->salary);
+            printf("\ntour n°%d : %s",tour+1, alloc_name);
+           // printf("\ntour n°%d : %s",tour+1, alloc_surname);
+            //printf("\ntour n°%d : %d",tour+1, new_civil->salary);
+            printf("\ntour n°%d - index  %d",tour+1, index_calculator(alloc_name, alloc_surname));
+            new_civil->name = alloc_name;
+            new_civil->surname = alloc_surname;
+            add(new_civil->name, new_civil->surname, new_civil->salary);
+            
+            //alloc_surname =  malloc(20*sizeof(char));
+          //  add(name, surname,new_civil->salary);
+            tour++;
+            //free(name); free(surname);
+           // name = ( char *) malloc(20* sizeof(char));
+        //   name = malloc(20*sizeof(char));
+         //   surname = malloc(20*sizeof(char));
+        }
+        else
+        {
+            break;
+    }
+    }
+    }  
+        fclose(fichier);
+}
+
