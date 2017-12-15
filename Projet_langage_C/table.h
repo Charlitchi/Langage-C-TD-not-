@@ -42,11 +42,11 @@ unsigned long long power (int number, int power);
 void add(char* name, char* surname, unsigned int salary); // Il faut calculer l'index en dehors et chercher le dernier civil_servant associé à cet index.
 void load(int number_of_servant);
 int show_salary(char* name, char* surname); // OK
-int show_salary_between(int first_index, int end_index, civil_servant ** table);      // OK
+void show_salary_between(int first_index, int end_index);      // OK
 void salary(civil_servant * civil);                                                  // OK
 int* civil_servant_number_by_index(civil_servant ** table); 						    // OK
-int conflict(civil_servant ** table);  												// OK
-float average_conflict(civil_servant ** table);  									   // OK
+void conflict();  												// OK
+void average_conflict();  									   // OK
 void delete_civil(char* name, char* surname); 
 void delete_civil_between(char* name, char* surname,unsigned int first_index, unsigned int end_index);
 void leave();

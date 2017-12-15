@@ -86,10 +86,10 @@ type_vector * create_larger_vector(int index_to_create)
 {
 	type_vector * future_vector = malloc(sizeof(type_vector));
 	future_vector->physical_size 	= table.vecteur[index_to_create].physical_size + 1;														// On rajoute 1 à la taille physique
-	printf("%i\n", future_vector->physical_size);
+	//printf("%i\n", future_vector->physical_size);
 	int new_physical_size 			= future_vector->physical_size;								// Par souci de clareté, on utilise une nouvelle variable qui représente la nouvelle taille physique du vecteur à l'index 
 	future_vector->logic_size 		= table.vecteur[index_to_create].logic_size + 1;														// On rajoute 1 à la taille logique
-	printf("%i\n", future_vector->logic_size);
+	//printf("%i\n", future_vector->logic_size);
 	future_vector->content = malloc(new_physical_size * sizeof(civil_servant));			// On crée un nouvel espace mémoire pour la table de vecteur
 	
 	for(int i = 0; i < new_physical_size; i++)															// On parcourt le tableau pour l'initialiser
@@ -232,23 +232,47 @@ void add(char* name, char* surname, unsigned int salary)
 		}
 		else
 		{
-			
+            type_vector *new_vec = create_larger_vector(index);
+            for (int i = 0; i < table.vecteur[index].physical_size; i++)
+				{
+					new_vec->content[i] = table.vecteur[index].content[i] ;
+				}
+			new_vec->content[table.vecteur[index].physical_size] = *new_civil_servant;
+				printf("%i\n", new_vec->physical_size);
+				table.vecteur[index] = *new_vec;
 		}
 	}
 }
-int show_salary(char* name, char* surname)
+int show_salary(char* name_test, char* surname_test)
 {
-    int index_value = index_calculator(name, surname);
-    int salary = 0;
-    for(int i = 1; i <= table.vecteur[index_value].physical_size; i++)
+    int index_value = index_calculator(name_test, surname_test);
+    int value_name = -1;  
+    int value_surname =-1;
+    unsigned int salary_value = 0;
+    if (table.vecteur[index_value].content == NULL)
     {
-        if (name == table.vecteur[index_value].content[i].name && surname == table.vecteur[index_value].content[i].surname )
+        return salary_value;
+    }
+    else
+    {
+       // printf("\n%d\n", table.vecteur[index_value].logic_size);
+        for (int i =0; i<table.vecteur[index_value].logic_size;i++)
         {
-            salary = table.vecteur[index_value].content[i].salary;
+           value_name = strcoll(table.vecteur[index_value].content[i].name, name_test);
+           value_surname= strcoll(table.vecteur[index_value].content[i].surname, surname_test);
+           //printf(" \n ----- index n°%d -----\n ", i);
+           //printf(" -- %i -- %i --  ", value_name, value_surname);
+           //printf("-- salary : %d -- ",table.vecteur[index_value].content[i].salary);
+           if (value_name == 0 && value_surname == 0)
+            {
+               salary_value = table.vecteur[index_value].content[i].salary;
+               break;
+            }
         }
     }
-    return salary;
-}
+    return salary_value;
+      }
+        
 void load(int number_of_servant)
 {
     int TAILLE_MAX = 1000;
@@ -267,7 +291,7 @@ void load(int number_of_servant)
     {
         while (fgets(chaine, TAILLE_MAX, fichier) != NULL)  // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
         {
-			if (tour < 10)
+			if (tour < number_of_servant)
 			{
     
 				alloc_name = (char*) malloc(20);
@@ -300,6 +324,103 @@ void load(int number_of_servant)
     }  
 	fclose(fichier);
 }
+
+void show_salary_between(int first_index, int end_index)
+{
+    if (first_index<0 || first_index >end_index)
+    {
+        first_index = 0;
+    }
+    if (end_index >=100)
+    {
+        end_index =99;
+    }
+    for (int i =first_index; i< end_index;i++)
+    {
+      if (table.vecteur[i].content!= NULL)
+      {
+          printf("\n -------- index n°%d --------  \n ", i);
+          for (int j=0; j<table.vecteur[i].logic_size;j++)
+          {
+              if( table.vecteur[i].content[j].name != NULL)
+              {
+                  printf("Le salaire de %s %s est de : %u $ \n",table.vecteur[i].content[j].name, table.vecteur[i].content[j].surname,table.vecteur[i].content[j].salary );
+              }
+          }
+          
+          }
+ }
+ }
+
+void conflict()
+{
+-printf("\n\n-----Vous avez choisi conflict-----\n\n");
+    int number_of_conflict =0;
+  for (int i =0; i< table.size;i++)
+  {
+      if (table.vecteur[i].content!= NULL)
+      {
+          if (table.vecteur[i].logic_size>0)
+          {
+              printf("Il y a un conflit à l'index : %i\n", i);
+              number_of_conflict++;
+              
+          }
+          else
+          {
+               printf("Il n'y a pas de conflit à l'index : %i\n", i);
+          }
+
+              }
+              else
+          {
+               printf("Il n'y a pas de conflit à l'index : %i car celui-ci n'existe pas \n", i);
+          }
+          }
+        if (number_of_conflict == table.size)
+        {
+            printf("Il y a des conflits dans toute la table");
+            
+        }   
+else
+ {
+      printf("Il y a %i conflit dans la table\n", number_of_conflict);
+     }
+     } 
+  
+  
+void average_conflict()
+{
+    double number_of_conflict =0;
+    double conflit_size =0;
+    printf("\n\n-----Vous avez choisi nombre moyen de conflit-----\n\n");
+  for (int i =0; i< table.size;i++)
+  {
+      if (table.vecteur[i].content!= NULL)
+      {
+          if (table.vecteur[i].logic_size>0)
+          {
+              printf("Il y a %i conflit(s) à l'index : %i\n", table.vecteur[i].logic_size, i);
+               number_of_conflict ++;
+              conflit_size = conflit_size + table.vecteur[i].logic_size;
+          }
+          else
+          {
+               printf("Il n'y a pas de conflit à l'index : %i\n", i);
+          }
+
+              }
+              else
+              {
+               printf("Il n'y a pas de conflit à l'index %i car celui-ci n'existe pas.\n", i);
+          }
+          }
+          double result = conflit_size/number_of_conflict;
+          printf("Il y a donc %lf en moyenne par index", result);
+    
+
+
+
 
 /*
 void load (int number_of_servant)
@@ -398,3 +519,5 @@ void load(int number_of_servant)
 	}
 }
 */
+
+}
