@@ -39,7 +39,7 @@ type_table table;
 
 int index_calculator(char* name, char* surname);	     
 unsigned long long power (int number, int power);									        
-void add(char* name, char* surname, unsigned int salary); // Il faut calculer l'index en dehors et chercher le dernier civil_servant associé à cet index.
+int add(char* name, char* surname, unsigned int salary); // Il faut calculer l'index en dehors et chercher le dernier civil_servant associé à cet index.
 void load(int number_of_servant);
 int show_salary(char* name, char* surname); // OK
 void show_salary_between(int first_index, int end_index);      // OK

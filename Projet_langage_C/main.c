@@ -2,17 +2,146 @@
 #include <stdbool.h>
 #include <string.h>
 #include "table.h"
+
+void menu()
+{
+
+    printf("\n\n---Menu---\n\n");
+     printf("1.Index\n");
+     printf("2.Ajout\n");
+     printf("3.Charger\n");
+     printf("4.Afficher Salaire\n");
+     printf("5.Afficher Salaire Entre\n");
+     printf("6.Nombre de conflits\n");
+     printf("7.Conflits moyen \n");
+     printf("8.supprimer\n");
+     printf("9.Supprimer entre\n");
+     printf("10.Quitter\n");
+     printf("\nVotre choix?\n\n");
+ 
+}
 int main(int argc, char **argv)
 {
-	table.size = 100;
-    table.base = 83;
+    table.size = 100;
+    table.base = 83; 
+    create_table();
+    char nom[20] = {0};
+    char prenom[20] = {0};
+    int value;
+    int salaire; 
+    int choix;
+    int first_index;
+    int end_index;
+    do
+    {  
+  
+     printf("\n\n---Menu---\n\n");
+     printf("1.Index\n");
+     printf("2.Ajout\n");
+     printf("3.Charger\n");
+     printf("4.Afficher Salaire\n");
+     printf("5.Afficher Salaire Entre\n");
+     printf("6.Nombre de conflits\n");
+     printf("7.Conflits moyen \n");
+     printf("8.supprimer\n");
+     printf("9.Supprimer entre\n");
+     printf("10.Quitter\n");
+     printf("\nVotre choix?\n\n");
+    scanf("%d\n", &choix);
+    switch(choix)
+    {
+        case 1:
+           printf("1.Index\n");
+           scanf("%d", &value);
+            printf("Quel est votre nom ? ");
+            scanf("%s", nom);
+        printf("Quel est votre prenom ? ");
+        scanf("%s", prenom);
+        printf("le nom est %s et le prénom est %s\n", nom, prenom);
+           int index_value = index_calculator(nom, prenom);
+           printf("L'index vaut = %d", index_value);
+            break;
+        
+        case 2:
+             printf("2.Ajout\n");
+        scanf("%d", &value);
+        printf("Quel est votre nom ? ");
+        scanf("%s", nom);
+        printf("Quel est votre prenom ? ");
+        scanf("%s", prenom);
+        printf("Quel est votre salaire ? ");
+        scanf("%d", &salaire);
+        int eff = add(nom, prenom, salaire);
+        if (eff == 1)
+        {
+              printf("Succès de l'ajout");
+        }
+        else
+        {
+            printf("Echec de l'ajout");
+        }
+        
+            break;
+        case 3:
+            printf("3.Charger\n");
+            scanf("%d", &value);
+            printf("Quel est le nombre de fonctionnaire voulu ? ");
+        scanf("%d", &value);
+            load(value);
+            break;
+        case 4:
+            printf("4.Afficher Salaire\n");
+            scanf("%d", &value);
+            printf("Quel est votre nom ? ");
+            scanf("%s", nom);
+            printf("Quel est votre prenom ? ");
+            scanf("%s", prenom);
+            show_salary(nom, prenom);
+     printf("\n\nle salaire de %s %s est de %d $",prenom, nom, show_salary(nom, prenom));
+            break;
+        case 5:
+            printf("5.Afficher Salaire Entre\n");
+               scanf("%d", &value);
+printf("Quel est l'index de début voulu ? ");
+        scanf("%d", &first_index);
+        printf("Quel est l'index de fin voulu ? ");
+        scanf("%d", &end_index);
+        show_salary_between(first_index, end_index);
+            break;
+            
+        case 6:
+              printf("6.Nombre de conflits\n");
+   conflict();
+            break;
+        case 7 :
+              printf("7.Conflits moyen \n");
+average_conflict();
+            break;
+        case 8 : 
+                 printf("8.supprimer\n");
+     
+            break;
+        case 9 : 
+            printf("9.Supprimer entre\n");
+    
+            break;
+        case 10 :
+         printf("10.Quitter\n");
+         exit(-1);
+        break;
+        default: printf("ce choix n'existe pas !\n");
+    } 
+    } while(choix != 10);
+
+    
+    
+	
     /*int index = index_calculator("AARON", "Kimberlei");
     int index2 = index_calculator("AARON", "Katrina");
 	printf("%i\n", index);
 	printf("%i\n", index2);*/
 	
-    create_table();
-    
+   
 	//add("AARON", "Katrina", 10000);
 //	add("AARON", "Katrinay", 12330);
 //	add("AARON", "Katrinayjaja", 1300);
@@ -23,7 +152,8 @@ int main(int argc, char **argv)
 //	printf("%d\n", table.vecteur[77].content[1].salary);
 //	printf("%d\n", table.vecteur[77].content[2].salary);
   //printf("%s\n", table.vecteur[index].content[1].name);
-	
+
+    
 	load(100000);
   
 	for (int i =0; i< table.size;i++)

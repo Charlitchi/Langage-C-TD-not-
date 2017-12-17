@@ -102,27 +102,22 @@ type_vector * create_larger_vector(int index_to_create)
 }
 bool civil_servant_is_in_the_table(civil_servant const * potential_civil_servant, int index_of_cs)
 {
-	bool same_name = false;
-	bool same_surname = false;
+	bool same_name = -1;
+	bool same_surname = -1;
 	bool result = false;
 	for (int i = 0; i < table.vecteur[index_of_cs].logic_size; i++)
 	{
-		if (table.vecteur[index_of_cs].content[i].name == potential_civil_servant->name)
-		{
-			same_name = true;
-		}
-		if (table.vecteur[index_of_cs].content[i].surname == potential_civil_servant->surname)
-		{
-			same_surname = true;
-		}
-		if(same_name && same_surname)
+		same_name = strcoll(table.vecteur[index_of_cs].content[i].name, potential_civil_servant->name);
+        same_surname= strcoll(table.vecteur[index_of_cs].content[i].surname, potential_civil_servant->surname);
+		if(same_name == 0 && same_surname == 0)
 		{
 			result = true;
+            break;
 		}
 		else
 		{
-			same_name = false;
-			same_surname = false;
+			same_name = -1;
+			same_surname = -1;
 		}
 	}
 	return result;
@@ -141,7 +136,7 @@ int index_to_put_civil_servant(civil_servant const * new_civil_servant, int inde
 	}
 	return index_to_put_civil_servant;
 }
-void add(char* name, char* surname, unsigned int salary)
+int add(char* name, char* surname, unsigned int salary)
 {
     /*int index = index_calculator(name, surname);
     if (table.vecteur[index].content == NULL)
@@ -180,6 +175,7 @@ void add(char* name, char* surname, unsigned int salary)
         }
     }*/
 	int index = index_calculator(name, surname);
+    int effectue = 0;
 	civil_servant * new_civil_servant = create_civil_servant(name, surname, salary);
 	
 	if (!civil_servant_is_in_the_table(new_civil_servant, index))
@@ -190,12 +186,6 @@ void add(char* name, char* surname, unsigned int salary)
 			if (table.vecteur[index].physical_size == 0)
 			{
 				type_vector * new_vect = create_larger_vector(index);
-				//table.vecteur[index] = create_larger_vector(index);
-				/*table.vecteur[index].content[0].name 		= malloc(sizeof(name));
-				table.vecteur[index].content[0].surname 	= malloc(sizeof(surname));
-				strcpy(table.vecteur[index].content[0].name, name);
-				strcpy(table.vecteur[index].content[0].surname, surname);
-				table.vecteur[index].content[0].salary = salary;*/
 				new_vect->content->name = malloc(sizeof(name));
 				new_vect->content->surname = malloc(sizeof(surname));
 				strcpy(new_vect->content->name, name);
@@ -204,6 +194,7 @@ void add(char* name, char* surname, unsigned int salary)
 				table.vecteur[index].content = new_vect->content;
 				table.vecteur[index].logic_size = new_vect->logic_size;
 				table.vecteur[index].physical_size = new_vect->physical_size;
+                effectue =1;
 			}
 			else
 			{
@@ -225,9 +216,10 @@ void add(char* name, char* surname, unsigned int salary)
 					new_vec->content[i] = table.vecteur[index].content[i] ;
 				}
 				new_vec->content[table.vecteur[index].physical_size] = *new_civil_servant;
-				printf("%i\n", new_vec->physical_size);
+				//printf("%i\n", new_vec->physical_size);
 				table.vecteur[index] = *new_vec;
 				// CODER UNE FONCTION QUI RANGE PAR ORDRE ALPHABETIQUE
+                effectue =1;
 			}
 		}
 		else
@@ -240,8 +232,14 @@ void add(char* name, char* surname, unsigned int salary)
 			new_vec->content[table.vecteur[index].physical_size] = *new_civil_servant;
 				printf("%i\n", new_vec->physical_size);
 				table.vecteur[index] = *new_vec;
+                effectue =1;
 		}
 	}
+    else
+    {
+        effectue = 0;
+    }
+    return effectue;
 }
 int show_salary(char* name_test, char* surname_test)
 {
@@ -300,10 +298,8 @@ void load(int number_of_servant)
 				//fscanf(fichier, "%s %s %d", name, surname, &new_civil->salary);
 				fscanf(fichier, "%s %s %d", alloc_name, alloc_surname, &new_civil->salary);
 				//fscanf(fichier, "%s %s %u", name, surname, &new_civil->salary);
-				printf("\ntour n°%d : %s", tour + 1, alloc_name);
 				//printf("\ntour n°%d : %s", tour + 1, alloc_surname);
 				//printf("\ntour n°%d : %d",tour+1, new_civil->salary);
-				printf("\ntour n°%d - index  %d",tour+1, index_calculator(alloc_name, alloc_surname));
 				new_civil->name = alloc_name;
 				new_civil->surname = alloc_surname;
 				add(new_civil->name, new_civil->surname, new_civil->salary);
