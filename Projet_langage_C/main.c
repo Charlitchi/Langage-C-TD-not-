@@ -151,25 +151,30 @@ average_conflict();
         case 8 : 
             printf("8.supprimer\n");
             scanf("%d", &value);
-            load(1000);
-            affichage();   
-            printf("Quel est votre nom ? ");
+            printf("Quel est votre nom ? \n");
             scanf("%s", nom);
-            printf("Quel est votre prenom ? ");
+            printf("Quel est votre prenom ? \n");
             scanf("%s", prenom);
- delete_civil(nom, prenom);
-      affichage(); 
+ bool effectue = delete_civil(nom, prenom);
+ if (effectue == true)
+ {
+     printf("La suppression à bien eu lieu\n");
+ }
+ else
+ {
+     printf("La suppression n'a pas pu se faire\n");
+ }
             break;
         case 9 : 
        
             printf("9.Supprimer entre\n");
-            load(100);
- affichage();
-        delete_civil_between(90, 99);
-        affichage();
-            
-    
-            break;
+              scanf("%d", &value);
+        printf("Quel est l'index de début voulu ? ");
+        scanf("%d", &first_index);
+        printf("Quel est l'index de fin voulu ? ");
+        scanf("%d", &end_index);
+        delete_civil_between(first_index, end_index);
+        break;
         case 10 :
          printf("10.Quitter\n");
          exit(-1);
