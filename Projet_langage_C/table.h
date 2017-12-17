@@ -47,8 +47,8 @@ void salary(civil_servant * civil);                                             
 int* civil_servant_number_by_index(civil_servant ** table); 						    // OK
 void conflict();  												// OK
 void average_conflict();  									   // OK
-void delete_civil(char* name, char* surname); 
-void delete_civil_between(char* name, char* surname,unsigned int first_index, unsigned int end_index);
+bool delete_civil(char* value_name, char* value_surname); 
+void delete_civil_between(unsigned int first_index, unsigned int end_index);
 void leave();
 //civil_servant** create_table(unsigned int size_table, unsigned int base);
 void create_table();

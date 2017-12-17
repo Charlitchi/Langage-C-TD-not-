@@ -384,7 +384,82 @@ else
      }
      } 
   
-  
+void delete_civil_between(unsigned int first_index, unsigned int end_index)
+{
+    if (first_index<0 || first_index >end_index)
+    {
+        first_index = 0;
+    }
+    if (end_index >=100)
+    {
+        end_index =99;
+    }
+    for (int i =first_index; i<end_index;i++)
+    {
+         if (table.vecteur[i].content!= NULL)
+         {
+                 for (int j=table.vecteur[i].logic_size-1; j>=0;j--)
+                 {
+                  table.vecteur[i].content[j].name = NULL;
+                table.vecteur[i].content[j].surname = NULL;
+                     table.vecteur[i].content[j].salary = 0;
+                     
+                 }
+         }
+         free(table.vecteur[i].content); 
+         table.vecteur[i].content = NULL;
+    }
+    
+      
+}
+bool delete_civil(char* value_name, char* value_surname)
+{
+    bool result = false;
+    int index_delete = -1;
+    int name_val = -1;
+    int surname_val = -1;
+     char* alloc_name;
+    char* alloc_surname;
+    
+    unsigned int index_value = index_calculator(value_name, value_surname);
+    for (int i =0; i<table.vecteur[index_value].logic_size; i++)
+    {
+        name_val = strcoll(table.vecteur[index_value].content[i].name, value_name);
+        surname_val= strcoll(table.vecteur[index_value].content[i].surname, value_surname);
+        if (name_val == 0 && surname_val == 0)
+        {
+            index_delete = i;
+            break;
+        }
+    }
+    if (index_delete == -1)
+    {
+        return result;
+    }
+    else
+    {
+        table.vecteur[index_value].logic_size--;
+
+for (int j=index_delete; j<table.vecteur[index_value].logic_size; j++)
+{
+   alloc_name = (char*) malloc(20);
+   alloc_surname = (char*) malloc(20);
+   alloc_name = table.vecteur[index_value].content[j+1].name;
+    alloc_surname = table.vecteur[index_value].content[j+1].surname;
+    int alloc_salary = table.vecteur[index_value].content[j+1].salary;
+
+    table.vecteur[index_value].content[j].name = alloc_name;
+    table.vecteur[index_value].content[j].surname = alloc_surname;
+    table.vecteur[index_value].content[j].salary = alloc_salary;
+result = true;   
+ 
+
+} 
+    }
+    
+    return result;
+}
+
 void average_conflict()
 {
     double number_of_conflict =0;

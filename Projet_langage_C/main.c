@@ -20,6 +20,37 @@ void menu()
      printf("\nVotre choix?\n\n");
  
 }
+
+void affichage()
+{
+            for (int i =0; i< table.size;i++)
+	{
+        printf("------------ %d -------------\n", i);
+		if (table.vecteur[i].content != NULL)
+		{
+			if (table.vecteur[i].content[0].name == NULL)
+			{
+              printf("rien à voir ici \n");
+			}
+			else
+			{
+            for (int j=0; j<table.vecteur[i].logic_size; j++)
+            {
+				printf("Name : %s ", table.vecteur[i].content[j].name);
+				printf(" surname : %s ", table.vecteur[i].content[j].surname);
+				printf(" salary : %d $ \n", table.vecteur[i].content[j].salary);
+			}
+            }
+            }
+            else
+            {
+                printf("Rien à l'index : %d\n", i);
+            }
+    
+            }
+    
+}
+
 int main(int argc, char **argv)
 {
     table.size = 100;
@@ -118,11 +149,25 @@ printf("Quel est l'index de début voulu ? ");
 average_conflict();
             break;
         case 8 : 
-                 printf("8.supprimer\n");
-     
+            printf("8.supprimer\n");
+            scanf("%d", &value);
+            load(1000);
+            affichage();   
+            printf("Quel est votre nom ? ");
+            scanf("%s", nom);
+            printf("Quel est votre prenom ? ");
+            scanf("%s", prenom);
+ delete_civil(nom, prenom);
+      affichage(); 
             break;
         case 9 : 
+       
             printf("9.Supprimer entre\n");
+            load(100);
+ affichage();
+        delete_civil_between(90, 99);
+        affichage();
+            
     
             break;
         case 10 :
